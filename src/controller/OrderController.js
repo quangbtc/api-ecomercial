@@ -24,7 +24,7 @@ export const addOrder= async(req,res)=>{
         await addOrder.save()
         return res.status(200).json(addOrder);
       } catch (err) {
-        createError(500,err)
+        return res.status(403).json(err)
       }
 
 }
@@ -49,5 +49,34 @@ export const deleteOrder= async(req,res)=>{
       createError(500,err)
     }
 
+}
+//get income
+export const getIcome=async (req,res)=>{
+  const date=new Date()
+  const lastMonth=new Date(date.setMonth(date.getMonth()-1))
+  const prevMonth=new Date(new Date().setMonth(lastMonth.getMonth()-1))
+
+  console.log(prevMonth)
+
+  try {
+   const income=await Order.aggregate([
+    {$match: {createdAt : {$gte:prevMonth}}},
+    {
+      $project: {
+        month:{$month :"$createdAt"},
+        sales:"$amount"
+      }
+    },{
+      $group: {
+        _id:"$month",
+        total:{$sum:"$sales"}
+      }
+    }
+   ])
+   return res.status(200).json(income)
+    
+  } catch (err) {
+    return res.status(403).json(err)
+  }
 }
 

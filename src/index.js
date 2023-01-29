@@ -2,6 +2,7 @@ import express, { json } from "express";
 import mongoose from "mongoose";
 import cookies from "cookie-parser";
 import cors from "cors"
+import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import userRoute from "./routes/userRoute.js";
 import authRoute from "./routes/authRoute.js";
@@ -36,9 +37,12 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
-app.use(express.json())
 app.use(cors())
 app.use(cookies())
+
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb',extended:true}));
+
 //CONNECT TO DB
 const connect = async () => {
   try {
@@ -55,6 +59,7 @@ mongoose.connection.on("connected", () => {
   console.log("Connected to mongoDb");
 });
 connect();
+app.use('/uploads',express.static('uploads'))
 app.use(cookies());
 // ROUTE
 app.use(express.json());

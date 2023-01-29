@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
-import { createError } from "../util/errorMessage.js";
 export const verifyToken = (req, res, next) => {
-  const authHeader = req.cookies.access_token;
+  const authHeader = req.headers.token.split(' ')[1];
   if (!authHeader) {
     return res.status(403).json('Token is not valid')
   } else {

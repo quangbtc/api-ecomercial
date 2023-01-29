@@ -12,7 +12,7 @@ export const getAllCart= async(req,res)=>{
 }
 export const findCartByUserId=async(req,res)=>{
         try {
-        let cart=await Cart.find({userId:req.params.id})
+        let cart=await Cart.findOne({userId:req.params.id})
         return res.status(200).json(cart);
         } catch (error) {
           createError(500,err)
