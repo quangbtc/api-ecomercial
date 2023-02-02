@@ -9,6 +9,7 @@ import authRoute from "./routes/authRoute.js";
 import productRoute from "./routes/productRoute.js"
 import cartRoute from "./routes/cartRoute.js"
 import orderRoute from "./routes/orderRoute.js"
+import stripeRoute from "./routes/stripeRoute.js"
 
 dotenv.config();
 const app = express();
@@ -71,6 +72,7 @@ app.use("/api/user", userRoute);
 app.use("/api/product", productRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/order", orderRoute);
+app.use("/api/checkout", stripeRoute);
 let PORT = process.env.PORT
 app.listen(PORT || 5000, () => {
   console.log("Backend server is runing!"+ PORT);

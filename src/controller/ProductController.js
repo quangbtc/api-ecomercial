@@ -54,18 +54,18 @@ export const addProduct = async (req, res) => {
             }
         }
         if (req.body.color) {
-            let arrColor=[]
+            let arrColor = [];
             for (let i = 0; i < req.body.color.length; i++) {
                 arrColor.push(JSON.parse(req.body.color[i]));
             }
-            product.color=arrColor
+            product.color = arrColor;
         }
         if (req.body.size) {
-          let arrSize=[]
+            let arrSize = [];
             for (let i = 0; i < req.body.size.length; i++) {
-              arrSize.push(JSON.parse(req.body.size[i]));
+                arrSize.push(JSON.parse(req.body.size[i]));
             }
-            product.size=arrSize
+            product.size = arrSize;
         }
         product.title = req.body.title;
         product.categories = req.body.categories;
@@ -97,14 +97,26 @@ export const updateProduct = async (req, res) => {
     }
 };
 export const deleteProduct = async (req, res) => {
-    console.log('check id',req.params.id)
+    console.log('check id', req.params.id);
     try {
         await Product.findByIdAndRemove({ _id: req.params.id });
         return res.status(200).json({
-            code:200,
+            code: 200,
             message: 'Delete product success',
         });
     } catch (err) {
         console.log(err);
+    }
+};
+export const getSaleProduct = async (req, res) => {
+    try {
+        let saleProducts = await Product.find({
+            saleOff: { $gt: 0 },
+        });
+        return res.status(200).json(saleProducts);
+    } catch (error) {
+        return res.status(401).json({
+            message: error,
+        });
     }
 };

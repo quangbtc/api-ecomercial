@@ -39,12 +39,16 @@ import {
     deleteProduct,
     getAllProduct,
     findProductById,
+    getSaleProduct
 } from '../controller/ProductController.js';
 const router = express.Router();
 
 router.get('/find', getAllProduct);
+router.get('/saleoff',getSaleProduct);
 router.get('/find/:id', verifyToken, findProductById);
-router.post('/add', upload, addProduct);
+router.post('/add',verifyToken, upload, addProduct);
 router.put('/update/:id', verifyTokenAndAuthorization, updateProduct);
 router.delete('/delete/:id', verifyTokenAndAdmin, deleteProduct);
+
+
 export default router;
