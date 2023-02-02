@@ -19,6 +19,7 @@ export const findOrderByUserId=async(req,res)=>{
         }
 }
 export const addOrder= async(req,res)=>{
+          console.log(req.body)
     try {
         const addOrder =  new Order(req.body)
         await addOrder.save()

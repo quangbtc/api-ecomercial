@@ -7,7 +7,6 @@ import dotenv from "dotenv";
 import userRoute from "./routes/userRoute.js";
 import authRoute from "./routes/authRoute.js";
 import productRoute from "./routes/productRoute.js"
-import cartRoute from "./routes/cartRoute.js"
 import orderRoute from "./routes/orderRoute.js"
 import stripeRoute from "./routes/stripeRoute.js"
 
@@ -70,7 +69,6 @@ app.get('/', (req, res) => {
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/product", productRoute);
-app.use("/api/cart", cartRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/checkout", stripeRoute);
 let PORT = process.env.PORT
