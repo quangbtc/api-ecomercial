@@ -5,7 +5,6 @@ import Stripe from 'stripe';
 const stripe = Stripe(process.env.STRIPE_KEY);
 const router = express.Router();
 router.post('/payment', async (req, res) => {
-    console.log(req.body);
     try {
         const charge = await stripe.charges.create({
             amount: req.body.amount,
